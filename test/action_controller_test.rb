@@ -4,61 +4,61 @@ require 'action_controller/test_process'
 require 'action_view'
 
 require 'test/unit'
-require File.dirname(__FILE__) + '/../lib/prawnto'
+require File.dirname(__FILE__) + '/../lib/hl7_rails'
 
 
 class ActionControllerTest < Test::Unit::TestCase
-  class PrawntoController < ActionController::Base
-    prawnto :inline=>true, :prawn=>{:page_orientation=>:landscape}
+  class HL7RailsController < ActionController::Base
+    hl7_rails :inline=>true
 
     def test
-      prawnto :inline=>false, :prawn=>{:page_size=>'A4'}
+      hl7_rails :inline=>false
     end
   end
 
   def test_inheritable_options
-    assert_equal({:page_orientation=>:landscape}, PrawntoController.read_inheritable_attribute(:prawn))
-    assert_equal({:inline=>true}, PrawntoController.read_inheritable_attribute(:prawnto))
+    assert_equal({}, HL7RailsController.read_inheritable_attribute(:hl7))
+    assert_equal({:inline=>true}, HL7RailsController.read_inheritable_attribute(:hl7_rails))
   end
 
   def test_computed_options
-    controller = PrawntoController.new
+    controller = HL7RailsController.new
     test_process(controller)
-    assert_equal({:inline=>false, :prawn=>{:page_orientation=>:landscape, :page_size=>'A4'}}, controller.send(:compute_prawnto_options))
+    assert_equal({:inline=>false, :hl7=>{}}, controller.send(:compute_hl7_rails_options))
   end
 
   # Controller with default false inline
-  class PrawntoControllerWithFalseInline < ActionController::Base
-    prawnto :inline=>false, :prawn=>{:page_orientation=>:landscape}
+  class HL7RailsControllerWithFalseInline < ActionController::Base
+    hl7_rails :inline=>false, :hl7=>{:test_option1 => :one}
 
     def test
-      prawnto :prawn=>{:page_size=>'A4'}
+      hl7_rails :hl7=>{:test_option2  => :two}
     end
   end
 
   def test_default_false_inline_should_not_be_overrided_automatically
-    assert_equal({:inline=>false}, PrawntoControllerWithFalseInline.read_inheritable_attribute(:prawnto))
+    assert_equal({:inline=>false}, HL7RailsControllerWithFalseInline.read_inheritable_attribute(:hl7_rails))
 
-    controller = PrawntoControllerWithFalseInline.new
+    controller = HL7RailsControllerWithFalseInline.new
     test_process(controller)
-    assert_equal({:inline=>false, :prawn=>{:page_orientation=>:landscape, :page_size=>'A4'}}, controller.send(:compute_prawnto_options))
+    assert_equal({:inline=>false, :hl7=>{:test_option1 => :one, :test_option2 => :two}}, controller.send(:compute_hl7_rails_options))
   end
 
   # Controller without default inline
-  class PrawntoControllerWithoutInline < ActionController::Base
-    prawnto :prawn=>{:page_orientation=>:landscape}
+  class HL7RailsControllerWithoutInline < ActionController::Base
+    hl7_rails :hl7=>{:test_option1 => :one}
 
     def test
-      prawnto :prawn=>{:page_size=>'A4'}
+      hl7_rails :hl7=>{:test_option2  => :two}
     end
   end
 
   def test_inline_should_be_a_true_by_default
-    assert_equal({:inline=>true}, PrawntoControllerWithoutInline.read_inheritable_attribute(:prawnto))
+    assert_equal({:inline=>true}, HL7RailsControllerWithoutInline.read_inheritable_attribute(:hl7_rails))
 
-    controller = PrawntoControllerWithoutInline.new
+    controller = HL7RailsControllerWithoutInline.new
     test_process(controller)
-    assert_equal({:inline=>true, :prawn=>{:page_orientation=>:landscape, :page_size=>'A4'}}, controller.send(:compute_prawnto_options))
+    assert_equal({:inline=>true, :hl7=>{:test_option1 => :one, :test_option2 => :two}}, controller.send(:compute_hl7_rails_options))
   end
   
 protected

@@ -1,7 +1,4 @@
-require 'prawnto'
+require 'ruby-hl7'
 
-Mime::Type.register "application/pdf", :pdf
-ActionView::Template.register_template_handler 'prawn', Prawnto::TemplateHandlers::Base
-ActionView::Template.register_template_handler 'prawn_dsl', Prawnto::TemplateHandlers::Dsl
-ActionView::Template.register_template_handler 'prawn_xxx', Prawnto::TemplateHandlers::Raw  
-
+Mime::Type.register "application/hl7-v2", :hl7
+ActionView::Template.register_template_handler 'hl7', Hl7Rails::TemplateHandlers::Base

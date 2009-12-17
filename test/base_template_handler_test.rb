@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'test/unit'
 require File.dirname(__FILE__) + '/template_handler_test_mocks'
-require File.dirname(__FILE__) + '/../lib/prawnto'
+require File.dirname(__FILE__) + '/../lib/hl7_rails'
 #require File.dirname(__FILE__) + '/../init'
 
 
@@ -11,26 +11,26 @@ class BaseTemplateHandlerTest < Test::Unit::TestCase
   
   def setup
     @view = ActionView.new
-    @handler = Prawnto::TemplateHandlers::Base.new(@view)
+    @handler = HL7Rails::TemplateHandlers::Base.new(@view)
     @controller = @view.controller
   end
 
   def test_headers_disposition_inline_and_filename
-    @controller.prawnto :filename=>'xxx.pdf', :inline=>true
-    @handler.pull_prawnto_options
+    @controller.hl7_rails :filename=>'xxx.hl7', :inline=>true
+#    @handler.hl7_rails_options
     @handler.set_disposition
-    assert_equal 'inline;filename=xxx.pdf', @view.headers['Content-Disposition']
+    assert_equal 'inline;filename=xxx.hl7', @view.headers['Content-Disposition']
   end
 
   def test_headers_disposition_attachment_and_filename
-    @controller.prawnto :filename=>'xxx.pdf', :inline=>false
-    @handler.pull_prawnto_options
+    @controller.hl7_rails :filename=>'xxx.hl7', :inline=>false
+#    @handler.hl7_rails_options
     @handler.set_disposition
-    assert_equal 'attachment;filename=xxx.pdf', @view.headers['Content-Disposition']
+    assert_equal 'attachment;filename=xxx.hl7', @view.headers['Content-Disposition']
   end
 
   def test_headers_disposition_default
-    @handler.pull_prawnto_options
+#    @handler.hl7_rails_options
     @handler.set_disposition
     assert_equal 'inline', @view.headers['Content-Disposition']
   end

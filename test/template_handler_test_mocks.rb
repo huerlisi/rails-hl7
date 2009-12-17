@@ -1,5 +1,5 @@
 require 'rubygems'
-require File.dirname(__FILE__) + '/../lib/prawnto'
+require File.dirname(__FILE__) + '/../lib/hl7_rails'
 
 module TemplateHandlerTestMocks
 
@@ -9,7 +9,7 @@ module TemplateHandlerTestMocks
     def initialize(source, locals={})
       @source = source
       @locals = locals
-      @filename = "blah.pdf"
+      @filename = "blah.hl7"
     end
   end
 
@@ -35,7 +35,7 @@ module TemplateHandlerTestMocks
 
   class ActionController
 
-    include Prawnto::ActionController
+    include HL7Rails::ActionController
 
     def response
       @response ||= Response.new
@@ -67,8 +67,8 @@ module TemplateHandlerTestMocks
       controller.headers
     end
 
-    def prawnto_options
-      controller.get_instance_variable(:@prawnto_options)
+    def hl7_rails_options
+      controller.get_instance_variable(:@hl7_rails_options)
     end
   end
 

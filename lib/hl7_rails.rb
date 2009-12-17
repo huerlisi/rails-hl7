@@ -1,19 +1,14 @@
 require 'action_controller'
 require 'action_view'
 
-require 'prawn'
-begin 
-  require "prawn/layout" # give people what they probably want
-rescue LoadError
-end
+require 'ruby-hl7'
 
-require 'prawnto/action_controller'
-require 'prawnto/action_view'
+require 'hl7_rails/action_controller'
+require 'hl7_rails/action_view'
 
-require 'prawnto/template_handler/compile_support'
+require 'hl7_rails/template_handler/compile_support'
 
-require 'prawnto/template_handlers/base'
-#require 'prawnto/template_handlers/raw'
+require 'hl7_rails/template_handlers/base'
 
 # for now applying to all Controllers
 # however, could reduce footprint by letting user mixin (i.e. include) only into controllers that need it
@@ -21,11 +16,11 @@ require 'prawnto/template_handlers/base'
 #
 
 class ActionController::Base
-  include Prawnto::ActionController
+  include HL7Rails::ActionController
 end
 
 class ActionView::Base
-  include Prawnto::ActionView
+  include HL7Rails::ActionView
 end
 
 
