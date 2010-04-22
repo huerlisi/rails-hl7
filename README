@@ -1,12 +1,14 @@
-Prawnto
-=======
+rails-hl7
+=========
 
-a rails plugin providing templating abilities
-for generating pdf files leveraging the new kick-ass prawn library
-
-full documentation/demos at: http://cracklabs.com/prawnto
+A rails plugin providing hl7 templating abilities. Uses the
+ruby-hl7 libraray available at <http://github.com/huerlisi/ruby-hl7>.
 
 
+Released under the MIT license.
 
+Copyright (c) 2009-2010 ZytoLabor <info@zyto-labor.com>
+Copyright (c) 2009-2010 Simon Hürlimann (ZytoLabor) <simon.huerlimann@cyt.ch>
 
-Copyright (c) 2008 cracklabs.com, released under the MIT license
+Based on prawnto <http://www.cracklabs.com/prawnto>
+* Copyright (c) 2008 cracklabs.com
